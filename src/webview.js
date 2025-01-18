@@ -9,6 +9,13 @@ function tocItemLinkClicked(dataset) {
   });
 }
 
+function showCopySuccess() {
+  document.getElementById('copy-success-message').innerHTML = ' 复制成功!';
+  setTimeout(() => {
+    document.getElementById('copy-success-message').innerHTML = '';
+  }, 800);
+}
+
 function copyInnerLink(dataset, text) {
   if (dataset === '') {
     webviewApi.postMessage({
@@ -23,11 +30,7 @@ function copyInnerLink(dataset, text) {
       content: text.trim(),
     });
   }
-
-  document.getElementById('header').innerHTML = 'Copy successful!';
-  setTimeout(() => {
-    document.getElementById('header').innerHTML = 'Outline';
-  }, 800);
+  showCopySuccess(); // 调用显示复制成功消息的函数
 }
 
 function scrollToTop() {
