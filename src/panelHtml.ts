@@ -126,6 +126,39 @@ export default async function panelHtml(headers: any[]) {
   ${linewrapStyle}
   text-decoration: none;
 }
+/* 添加的样式来隐藏 body 右侧的滚动条但允许上下滚动 */
+html {
+    height: 100%;
+    overflow-x: hidden; /* 隐藏水平滚动条 */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* 设置 body 高度为视口高度 */
+    overflow-y: auto; /* 允许垂直滚动 */
+    overflow-x: hidden; /* 确保水平滚动条被隐藏 */
+}
+#header {
+    position: fixed;
+    top: 0;
+    width: 90%;
+    background-color: #fff; /* 设置背景颜色以防止内容被遮挡 */
+    z-index: 1000; /* 确保 header 在其他内容上方 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px 3px 10px;; /* 添加一些内边距 */
+}
+/* 添加的 #copy-success-message 样式 */
+#copy-success-message {
+    color: green; /* 可以根据需要更改颜色 */
+    font-size: 14px; /* 可以根据需要更改字体大小 */
+}
+.container {
+    margin-top: 25px; /* 根据 header 的高度调整，避免内容被固定 header 遮挡 */
+    margin-left: 5px; /* 调整左侧缩进 */
+}
 ${hoverStyle}
 ${[1, 2, 3, 4, 5, 6].map((item) => `.toc-item-${item} {
   padding-left: ${(item - 1) * headerIndent + 5}px !important;
@@ -146,7 +179,7 @@ ${userStyleFromFile}
 ${userStyle}
 </style></head>
 <body><div class="outline-content">
-<a id="header" href="javascript:;" onclick="scrollToTop()" oncontextmenu="copyInnerLink('', '')">OUTLINE</a>
+<a id="header" href="javascript:;" onclick="scrollToTop()" oncontextmenu="copyInnerLink('', '')">文章大纲<span id="copy-success-message"></span></a>
 <div class="container">
 ${itemHtmlList.join('\n')}
 </div>
