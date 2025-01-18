@@ -71,7 +71,7 @@ export default async function panelHtml(headers: any[]) {
     /* eslint-disable no-await-in-loop */
     if (collapsible) {
       let suffix: string = '';
-      let toggleElem: string = '<span>&ensp;</span>';
+      let toggleElem: string = '<span style="display: inline-block;width:15px">&ensp;</span>';
 
       if (headerIdx >= headers.length - 1) {
         // Last element
@@ -83,7 +83,7 @@ export default async function panelHtml(headers: any[]) {
         const nextHeader = headers[headerIdx + 1];
 
         if (header.level < nextHeader.level) {
-          toggleElem = `<span id="toggle-${header.number}" class="toggle-button" onclick="toggleHidden('${header.number}')">&#9662</span>`;
+          toggleElem = `<span id="toggle-${header.number}" class="toggle-button" style="display: inline-block;width:15px" onclick="toggleHidden('${header.number}')">&#9662</span>`;
           suffix = suffix.concat(`<div id="toc-group-${header.number}">`);
           divsToClose.push(nextHeader.level);
         } else if (header.level > nextHeader.level) {
@@ -136,8 +136,13 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh; /* 设置 body 高度为视口高度 */
-    overflow-y: auto; /* 允许垂直滚动 */
+    overflow-y: scroll; /* 允许垂直滚动 */
     overflow-x: hidden; /* 确保水平滚动条被隐藏 */
+    scrollbar-width: none; /* Firefox 隐藏滚动条 */
+}
+body::-webkit-scrollbar {
+    width: 0; /* Chrome, Safari, Edge 隐藏滚动条 */
+    background: transparent; /* Chrome, Safari, Edge 隐藏滚动条 */
 }
 #header {
     position: fixed;
@@ -157,7 +162,7 @@ body {
 }
 .container {
     margin-top: 25px; /* 根据 header 的高度调整，避免内容被固定 header 遮挡 */
-    margin-left: 5px; /* 调整左侧缩进 */
+    margin-left: 0px; /* 调整左侧缩进 */
 }
 ${hoverStyle}
 ${[1, 2, 3, 4, 5, 6].map((item) => `.toc-item-${item} {
